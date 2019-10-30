@@ -98,7 +98,8 @@ app.post("/users", (req, res) => {
   }
 });
 
-app.put("/users/:username/:password/:email/:dob", (req, res) => {
+//app.put("/users/:username/:password/:email/:dob", (req, res) => {
+app.put("/users/:username", (req, res) => {
   res.send("User information has been updated");
 });
 
