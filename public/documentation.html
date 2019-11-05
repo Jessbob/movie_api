@@ -34,14 +34,14 @@
           Return data (description, genre, director, image URL, whether it’s
           featured or not) about a single movie by title to the user
         </td>
-        <td>/movies/[title]</td>
+        <td>/movies/:Title</td>
         <td>GET</td>
         <td>None</td>
         <td>
           A JSON object holding data about a single movie. Containing a title,
-          description, genre, director and image URL. <br />
-          { title: “Fargo”, description: “Movie Description goes here”, genre:
-          “Genre goes here”, director: “Director’s name” imageUrl: }
+          description, genre, director and image URL { Title: “Fargo”,
+          Description: “Movie Description goes here”, Genre: “Genre goes here”,
+          Director: “Director’s name”, ImageUrl: “fargo.png”, Featured: true }
         </td>
       </tr>
       <tr>
@@ -49,25 +49,26 @@
           Return data about a genre (description) by name/title (e.g.,
           “Thriller”)
         </td>
-        <td>/genres/[genre]</td>
+        <td>movies/genres/:Name</td>
         <td>GET</td>
         <td>None</td>
         <td>
           A JSON object holding data about a genre. <br />
-          { genre: “Genres name”, description: “Genres Description” }
+          A JSON object holding data about a genre. { Name: “Genres name”,
+          Description: “Genres Description” }
         </td>
       </tr>
       <tr>
         <td>
           Return data about a director (bio, birth year, death year) by name
         </td>
-        <td>/directors/[name]</td>
+        <td>/directors/:Name</td>
         <td>GET</td>
         <td>None</td>
         <td>
           A JSON object holding data about a director. <br />
-          { director: “Director’s Name”, bio: “Bio goes here”, birth: “Birth
-          year goes here”, death: “Death year goes here” }
+          { Name: “Director’s Name”, Bio: “Bio goes here”, Birthyear: “Birth
+          year goes here”, Deathyear: “Death year goes here” }
         </td>
       </tr>
       <tr>
@@ -77,14 +78,14 @@
         <td>
           A JSON object holding data about the user to add, structured like:
           <br />
-          { username: “moviephoneguy”, name: "Cosmo Kramer", dob: “05/01/1943”
-          email: newman@usps.com, password: “jerry5A” }
+          { Username: “moviephoneguy”, Birthday: “05/01/1943” Email:
+          newman@usps.com, Password: “jerry5A” }
         </td>
         <td>
           A JSON object holding data about the user that was added, including an
           ID: <br />
-          { Id: “unique ID” username: “moviephoneguy”, name: "Cosmo Kramer",
-          dob: “05/01/1943” email: newman@usps.com, password: “jerry5A” }
+          { Id: “unique ID” Username: “moviephoneguy”, Birthday: “05/01/1943”
+          Email: newman@usps.com, Password: “jerry5A” }
         </td>
       </tr>
       <tr>
@@ -92,23 +93,23 @@
           Allow users to update their user info (username, password, email, date
           of birth)
         </td>
-        <td>/user/[username]/[name]/[dob]/[email]/[password]</td>
+        <td>/users/:Username</td>
         <td>PUT</td>
         <td>
           A JSON object holding data about the user to update, structured like:
           <br />
-          { username: “moviephoneguy”, name: "Cosmo Kramer", dob: “05/01/1943”
-          email: newman@usps.com, password: “jerry5A” }
+          { Username: “moviephoneguy”, Birthday: “05/01/1943” Email:
+          newman@usps.com, Password: “jerry5A” }
         </td>
         <td>
           A JSON object holding data about the user that was updated: <br />
-          { username: “moviephoneguy”, name: "Cosmo Kramer", dob: “05/01/1943”
-          email: newman@usps.com, password: “jerry5A” }
+          { Username: “moviephoneguy”, Birthday: “05/01/1943”, Email:
+          newman@usps.com, Password: “jerry5A” }
         </td>
       </tr>
       <tr>
         <td>Allow users to add a movie to their list of favorites</td>
-        <td>/users/[username]/[favorites]/[title]</td>
+        <td>/users/:Username/Movies/:MovieID</td>
         <td>POST</td>
         <td>None</td>
         <td>
@@ -117,7 +118,7 @@
       </tr>
       <tr>
         <td>Allow users to remove a movie from their list of favorites</td>
-        <td>/users/[username]/[favorites]/[title]</td>
+        <td>/users/:Username/Movies/:MovieID</td>
         <td>DELETE</td>
         <td>None</td>
         <td>
@@ -126,7 +127,7 @@
       </tr>
       <tr>
         <td>Allow existing users to deregister</td>
-        <td>/users/[username]</td>
+        <td>/users/:Username</td>
         <td>DELETE</td>
         <td>None</td>
         <td>A message indicating that the user has been removed.</td>
