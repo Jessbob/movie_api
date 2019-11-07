@@ -8,6 +8,7 @@ const morgan = require("morgan");
 const app = express();
 const Movies = Models.Movie;
 const Users = Models.User;
+const { check, validationResults } = require("express-validator");
 
 mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
 app.use(bodyParser.json());
@@ -111,43 +112,82 @@ app.get(
   }
 );
 
-app.post("/users", function(req, res) {
-  Users.findOne({ Username: req.body.Username })
-    .then(function(user) {
-      if (user) {
-        return res.status(400).send(req.body.Username + "already exist");
-      } else {
-        Users.create({
-          Username: req.body.Username,
-          Password: req.body.Password,
-          Email: req.body.Email,
-          Birthday: req.body.Birthday
-        })
-          .then(function(user) {
-            res.status(201).json(user);
+app.post(
+  "/users",
+  [
+    check("Username", "Username is required").isLength({ min: 5 }),
+    check(
+      "Username",
+      "Username contains non alphanumeric characters - not allowed."
+    ).isAlphanumeric(),
+    check("Password", "Password is required")
+      .not()
+      .isEmpty(),
+    check("Email", "Email does not appear to be valid").isEmail()
+  ],
+  (req, res) => {
+    var errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    var hashedPassword = Users.hashPassword(req.body.Password);
+    Users.findOne({ Username: req.body.Username })
+      .then(function(user) {
+        if (user) {
+          return res.status(400).send(req.body.Username + "already exist");
+        } else {
+          Users.create({
+            Username: req.body.Username,
+            Password: hashedPassword,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
           })
-          .catch(function(error) {
-            console.error(error);
-            res.staus(500).send("Error: " + error);
-          });
-      }
-    })
-    .catch(function(error) {
-      console.error(error);
-      res.stauts(500).send("Error: " + error);
-    });
-});
+            .then(function(user) {
+              res.status(201).json(user);
+            })
+            .catch(function(error) {
+              console.error(error);
+              res.staus(500).send("Error: " + error);
+            });
+        }
+      })
+      .catch(function(error) {
+        console.error(error);
+        res.stauts(500).send("Error: " + error);
+      });
+  }
+);
 
 app.put(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
-  function(req, res) {
+  [
+    check("Username", "Username is required").isLength({ min: 5 }),
+    check(
+      "Username",
+      "Username containd non alphanumeric characters - not allowed."
+    ).isAlphanumeric(),
+    check("Password", "Password is required")
+      .not()
+      .isEmpty(),
+    check("Email", "Email does not appear to be valid").isEmail()
+  ],
+  (req, res) => {
+    var errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.statud(422).json({ errors: errors.array() });
+    }
+
+    var hashedPassword = User.hashedPassword(req.body.Password);
+
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
         $set: {
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: req.body.hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday
         }
