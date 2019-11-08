@@ -1,0 +1,1 @@
+mongoimport --host JessbobFlix-shard-0/jessbobflix-shard-00-00-5rn1h.mongodb.net:27017,jessbobflix-shard-00-01-5rn1h.mongodb.net:27017,jessbobflix-shard-00-02-5rn1h.mongodb.net:27017 --ssl --username jessbobadmin --password <PASSWORD> --authenticationDatabase admin --db <DATABASE> --collection <COLLECTION> --type <FILETYPE> --file <FILENAME>
