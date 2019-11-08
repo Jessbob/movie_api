@@ -9,11 +9,13 @@ const app = express();
 const Movies = Models.Movie;
 const Users = Models.User;
 const { check, validationResults } = require("express-validator");
+const cors = require("cors");
 
 mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
 app.use(bodyParser.json());
 app.use(morgan("common"));
 app.use(express.static("public"));
+app.use(cors());
 app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.status(500).send("Something broke!");
@@ -177,7 +179,7 @@ app.put(
     var errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.statud(422).json({ errors: errors.array() });
+      return res.status(422).json({ errors: errors.array() });
     }
 
     var hashedPassword = User.hashedPassword(req.body.Password);
@@ -268,4 +270,9 @@ app.delete(
   }
 );
 
-app.listen(8080, () => console.log("Your app is listening on port 8080."));
+var port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", function() {
+  console.log("Listening on Port 3000");
+});
+
+//app.listen(8080, () => console.log("Your app is listening on port 8080."));
