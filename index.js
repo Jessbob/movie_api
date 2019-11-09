@@ -8,7 +8,7 @@ const morgan = require("morgan");
 const app = express();
 const Movies = Models.Movie;
 const Users = Models.User;
-const { check, validationResults } = require("express-validator");
+const { check, validationResult } = require("express-validator");
 const cors = require("cors");
 
 //mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
