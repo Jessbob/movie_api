@@ -11,7 +11,12 @@ const Users = Models.User;
 const { check, validationResults } = require("express-validator");
 const cors = require("cors");
 
-mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
+//mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
+mongoose.connect(
+  "mongodb+srv://jessbobadmin:myflixpass@jessbobflix-5rn1h.mongodb.net/test?retryWrites=true&w=majority",
+  { useNewUrlParser: true }
+);
+
 app.use(bodyParser.json());
 app.use(morgan("common"));
 app.use(express.static("public"));
