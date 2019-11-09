@@ -93,7 +93,10 @@ app.get(
   }
 );
 
-app.get("/users", function(req, res) {
+app.get("/users", passport.authenticate("jwt", { session: false }), function(
+  req,
+  res
+) {
   Users.find()
     .then(function(users) {
       res.status(201).json(users);
