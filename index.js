@@ -31,7 +31,7 @@ const passport = require("passport");
 require("./passport");
 
 app.get("/", (req, res) => {
-  res.send("Welcome to myFlix!");
+  res.send("Welcome");
 });
 
 app.get("/movies", passport.authenticate("jwt", { session: false }), function(
