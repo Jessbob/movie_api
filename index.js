@@ -8,7 +8,7 @@ const morgan = require("morgan");
 const app = express();
 const Movies = Models.Movie;
 const Users = Models.User;
-const { check, validationResults } = require("express-validator");
+const { check, validationResult } = require("express-validator");
 const cors = require("cors");
 
 //mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
@@ -31,13 +31,10 @@ const passport = require("passport");
 require("./passport");
 
 app.get("/", (req, res) => {
-  res.send("Welcome to myFlix!");
+  res.send("Welcome");
 });
 
-app.get("/movies", passport.authenticate("jwt", { session: false }), function(
-  req,
-  res
-) {
+app.get("/movies", function(req, res) {
   Movies.find()
     .then(function(movies) {
       res.status(201).json(movies);
@@ -93,7 +90,10 @@ app.get(
   }
 );
 
-app.get("/users", function(req, res) {
+app.get("/users", passport.authenticate("jwt", { session: false }), function(
+  req,
+  res
+) {
   Users.find()
     .then(function(users) {
       res.status(201).json(users);
@@ -187,14 +187,14 @@ app.put(
       return res.status(422).json({ errors: errors.array() });
     }
 
-    var hashedPassword = User.hashedPassword(req.body.Password);
+    var hashedPassword = Users.hashPassword(req.body.Password);
 
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
         $set: {
           Username: req.body.Username,
-          Password: req.body.hashedPassword,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday
         }
