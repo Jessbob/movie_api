@@ -13,9 +13,9 @@ export class MainView extends React.Component {
     };
   }
 
-  render() {
+  /*render() {
     return <div className="main-view"></div>;
-  }
+  }*/
 
   componentDidMount() {
     axios
@@ -49,7 +49,7 @@ export class MainView extends React.Component {
             <MovieCard
               key={movie._id}
               movie={movie}
-              onclick={movie => this.onMovieClick(movie)}
+              onClick={movie => this.onMovieClick(movie)}
             />
           ))
         )}

@@ -33597,7 +33597,9 @@ function (_React$Component) {
   _createClass(MovieView, [{
     key: "render",
     value: function render() {
-      var movie = this.props.movie;
+      var _this$props = this.props,
+          movie = _this$props.movie,
+          onClick = _this$props.onClick;
       if (!movie) return null;
       return _react.default.createElement("div", {
         className: "movie-view"
@@ -33620,7 +33622,7 @@ function (_React$Component) {
         className: "movie-genre"
       }, _react.default.createElement("span", {
         className: "label"
-      }, "Genre"), _react.default.createElement("span", {
+      }, "Genre: "), _react.default.createElement("span", {
         className: "value"
       }, movie.Genre.Name)), _react.default.createElement("div", {
         className: "movie-director"
@@ -33689,15 +33691,12 @@ function (_React$Component) {
     };
     return _this;
   }
+  /*render() {
+    return <div className="main-view"></div>;
+  }*/
+
 
   _createClass(MainView, [{
-    key: "render",
-    value: function render() {
-      return _react.default.createElement("div", {
-        className: "main-view"
-      });
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
@@ -33736,7 +33735,7 @@ function (_React$Component) {
         return _react.default.createElement(_movieCard.MovieCard, {
           key: movie._id,
           movie: movie,
-          onclick: function onclick(movie) {
+          onClick: function onClick(movie) {
             return _this3.onMovieClick(movie);
           }
         });
