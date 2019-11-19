@@ -13,10 +13,6 @@ export class MainView extends React.Component {
     };
   }
 
-  /*render() {
-    return <div className="main-view"></div>;
-  }*/
-
   componentDidMount() {
     axios
       .get("https://jessbob-flix.herokuapp.com/movies")
@@ -43,7 +39,10 @@ export class MainView extends React.Component {
     return (
       <div className="main-view">
         {selectedMovie ? (
-          <MovieView movie={selectedMovie} />
+          <MovieView
+            movie={selectedMovie}
+            goBack={() => this.onMovieClick(null)}
+          />
         ) : (
           movies.map(movie => (
             <MovieCard
