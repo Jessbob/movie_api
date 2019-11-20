@@ -35795,6 +35795,8 @@ var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -35847,16 +35849,21 @@ function LoginView(props) {
   })), _react.default.createElement(_Button.default, {
     type: "button",
     onClick: handleSubmit
-  }, "Submit"), _react.default.createElement(_Form.default.Group, {
+  }, "Login"), _react.default.createElement(_Form.default.Group, {
     controlId: "newUser"
-  }, _react.default.createElement(_Form.default.Text, null, "Not a member?", _react.default.createElement(_Button.default, {
+  }, _react.default.createElement(_Form.default.Text, null, _react.default.createElement(_Button.default, {
     id: "registerButton",
     onClick: function onClick() {
       return props.onClick();
     }
-  }, "Sign Up!")))));
+  }, "Sign Up!"), _react.default.createElement("h6", null, " To access more features! ")))));
 }
-},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js"}],"../node_modules/react-bootstrap/esm/divWithClassName.js":[function(require,module,exports) {
+
+LoginView.propTypes = {
+  onLoggedIn: _propTypes.default.func.isRequired,
+  onClick: _propTypes.default.func.isRequired
+};
+},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","prop-types":"../node_modules/prop-types/index.js"}],"../node_modules/react-bootstrap/esm/divWithClassName.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36117,6 +36124,10 @@ exports.MovieView = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
+var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
+
+var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -36159,7 +36170,7 @@ function (_React$Component) {
           movie = _this$props.movie,
           goBack = _this$props.goBack;
       if (!movie) return null;
-      return _react.default.createElement("div", {
+      return _react.default.createElement(_Container.default, null, _react.default.createElement("div", {
         className: "movie-view"
       }, _react.default.createElement("img", {
         className: "movie-poster",
@@ -36188,9 +36199,10 @@ function (_React$Component) {
         className: "label"
       }, "Director: "), _react.default.createElement("span", {
         className: "value"
-      }, movie.Director.Name)), _react.default.createElement("div", null, _react.default.createElement("button", {
+      }, movie.Director.Name)), _react.default.createElement("div", null, _react.default.createElement(_Button.default, {
+        id: "goBack",
         onClick: goBack
-      }, "Back")));
+      }, "Back"))));
     }
   }]);
 
@@ -36198,7 +36210,7 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.MovieView = MovieView;
-},{"react":"../node_modules/react/index.js"}],"components/registration-view/registration-view.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js"}],"components/registration-view/registration-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36258,15 +36270,6 @@ function RegistrationView(props) {
   };
 
   return _react.default.createElement(_Container.default, null, _react.default.createElement(_Form.default, null, _react.default.createElement(_Form.default.Group, {
-    controlId: "formBasicEmail"
-  }, _react.default.createElement(_Form.default.Label, null, "Email address"), _react.default.createElement(_Form.default.Control, {
-    type: "email",
-    placeholder: "Enter email",
-    value: email,
-    onChange: function onChange(e) {
-      return createEmail(e.target.value);
-    }
-  }), _react.default.createElement(_Form.default.Text, null, "We will never share your information with anyone")), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicUsername"
   }, _react.default.createElement(_Form.default.Label, null, "Username"), _react.default.createElement(_Form.default.Control, {
     type: "text",
@@ -36285,6 +36288,17 @@ function RegistrationView(props) {
       return createPassword(e.target.value);
     }
   })), _react.default.createElement(_Form.default.Group, {
+    controlId: "formBasicEmail"
+  }, _react.default.createElement(_Form.default.Label, null, "Email address"), _react.default.createElement(_Form.default.Control, {
+    type: "email",
+    placeholder: "Enter email",
+    value: email,
+    onChange: function onChange(e) {
+      return createEmail(e.target.value);
+    }
+  }), _react.default.createElement(_Form.default.Text, {
+    className: "text-muted"
+  }, "We will never share your information with anyone")), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicDob"
   }, _react.default.createElement(_Form.default.Label, null, "Birthday"), _react.default.createElement(_Form.default.Control, {
     type: "date",
@@ -36294,19 +36308,23 @@ function RegistrationView(props) {
       return createDob(e.target.value);
     }
   })), _react.default.createElement(_Form.default.Group, {
-    controlID: "formBasicCheckbox"
+    controlId: "formBasicCheckbox"
   }, _react.default.createElement(_Form.default.Check, {
     type: "checkbox",
     label: "Confirm you really want to register for myFlix"
   })), _react.default.createElement(_Button.default, {
     type: "submit",
     onClick: handleSubmit
-  }, "Register"), _react.default.createElement(_Button.default, {
+  }, "Register"), " ", _react.default.createElement(_Button.default, {
     onClick: function onClick() {
       return props.onClick();
     }
   }, "Go to Login")));
 }
+
+RegistrationView.propTypes = {
+  onClick: _propTypes.default.func.isRequired
+};
 },{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
 
@@ -36621,7 +36639,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55071" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61113" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

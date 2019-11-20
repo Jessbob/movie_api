@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
+import PropTypes from "prop-types";
 
 export function LoginView(props) {
   const [username, setUsername] = useState("");
@@ -36,18 +37,23 @@ export function LoginView(props) {
           />
         </Form.Group>
         <Button type="button" onClick={handleSubmit}>
-          Submit
+          Login
         </Button>
 
         <Form.Group controlId="newUser">
           <Form.Text>
-            Not a member?
             <Button id="registerButton" onClick={() => props.onClick()}>
               Sign Up!
             </Button>
+            <h6> To access more features! </h6>
           </Form.Text>
         </Form.Group>
       </Form>
     </Container>
   );
 }
+
+LoginView.propTypes = {
+  onLoggedIn: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired
+};

@@ -19,19 +19,6 @@ export function RegistrationView(props) {
   return (
     <Container>
       <Form>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            onChange={e => createEmail(e.target.value)}
-          />
-          <Form.Text>
-            We will never share your information with anyone
-          </Form.Text>
-        </Form.Group>
-
         <Form.Group controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control
@@ -41,7 +28,6 @@ export function RegistrationView(props) {
             onChange={e => createUsername(e.target.value)}
           />
         </Form.Group>
-
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
@@ -51,7 +37,18 @@ export function RegistrationView(props) {
             onChange={e => createPassword(e.target.value)}
           />
         </Form.Group>
-
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
+            value={email}
+            onChange={e => createEmail(e.target.value)}
+          />
+          <Form.Text className="text-muted">
+            We will never share your information with anyone
+          </Form.Text>
+        </Form.Group>
         <Form.Group controlId="formBasicDob">
           <Form.Label>Birthday</Form.Label>
           <Form.Control
@@ -61,19 +58,21 @@ export function RegistrationView(props) {
             onChange={e => createDob(e.target.value)}
           />
         </Form.Group>
-        <Form.Group controlID="formBasicCheckbox">
+        <Form.Group controlId="formBasicCheckbox">
           <Form.Check
             type="checkbox"
             label="Confirm you really want to register for myFlix"
           />
         </Form.Group>
-
         <Button type="submit" onClick={handleSubmit}>
           Register
-        </Button>
-
+        </Button>{" "}
         <Button onClick={() => props.onClick()}>Go to Login</Button>
       </Form>
     </Container>
   );
 }
+
+RegistrationView.propTypes = {
+  onClick: PropTypes.func.isRequired
+};
