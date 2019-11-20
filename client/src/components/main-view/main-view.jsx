@@ -1,7 +1,14 @@
 import React from "react";
 import axios from "axios";
+
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
+import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import { RegistrationView } from "../registration-view/registration-view";
 
 export class MainView extends React.Component {
   constructor() {
@@ -9,7 +16,9 @@ export class MainView extends React.Component {
 
     this.state = {
       movies: null,
-      selectedMovie: null
+      selectedMovie: null,
+      user: null,
+      register: false
     };
   }
 
@@ -32,26 +41,59 @@ export class MainView extends React.Component {
     });
   }
 
+  onLoggedIn(user) {
+    this.setState({ user });
+  }
+
+  register() {
+    this.setState({ register: true });
+  }
+
+  goToLogin() {
+    this.setState({ register: false });
+  }
+
   render() {
-    const { movies, selectedMovie } = this.state;
+    const { movies, selectedMovie, user, register } = this.state;
+
+    if (!user && register === false)
+      return (
+        <LoginView
+          onClick={() => this.register()}
+          onLoggedIn={user => this.onLoggedIn(user)}
+        />
+      );
+
+    if (register)
+      return (
+        <RegistrationView
+          onClick={() => this.goToLogin()}
+          onLoggedIn={user => this.onLoggedIn(user)}
+        />
+      );
+
     if (!movies) return <div className="main-view" />;
 
     return (
       <div className="main-view">
-        {selectedMovie ? (
-          <MovieView
-            movie={selectedMovie}
-            goBack={() => this.onMovieClick(null)}
-          />
-        ) : (
-          movies.map(movie => (
-            <MovieCard
-              key={movie._id}
-              movie={movie}
-              onClick={movie => this.onMovieClick(movie)}
-            />
-          ))
-        )}
+        <Container>
+          <Row>
+            {selectedMovie ? (
+              <MovieView
+                movie={selectedMovie}
+                goBack={() => this.onMovieClick(null)}
+              />
+            ) : (
+              movies.map(movie => (
+                <MovieCard
+                  key={movie._id}
+                  movie={movie}
+                  onClick={movie => this.onMovieClick(movie)}
+                />
+              ))
+            )}
+          </Row>
+        </Container>
       </div>
     );
   }
