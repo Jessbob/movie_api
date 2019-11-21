@@ -23,16 +23,23 @@ export class MainView extends React.Component {
   }
 
   componentDidMount() {
-    axios
-      .get("https://jessbob-flix.herokuapp.com/movies")
-      .then(response => {
-        this.setState({
-          movies: response.data
-        });
-      })
-      .catch(function(error) {
-        console.log(error);
+    let accessToken = localStorage.getItem("token");
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem("usser")
       });
+      this.getMovies(accessToken);
+    }
+    // axios
+    //   .get("https://jessbob-flix.herokuapp.com/movies")
+    //   .then(response => {
+    //     this.setState({
+    //       movies: response.data
+    //     });
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
   }
 
   getMovies(token) {
