@@ -12,8 +12,23 @@ export function RegistrationView(props) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(username, password, email, birthday);
-    props.onLoggedIn(username);
+    // console.log(username, password, email, birthday);
+    axios
+      .post("https://jessbob-flix.herokuapp.com/users", {
+        Username: username,
+        Password: password,
+        Email: email,
+        Birthday: birthday
+      })
+      .then(response => {
+        const data = response.data;
+        console.log(data);
+        window.open("/", "_self");
+      })
+      .catch(e => {
+        console.log("error registering the user");
+      });
+    //props.onLoggedIn(username);
   };
 
   return (
