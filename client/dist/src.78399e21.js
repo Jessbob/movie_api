@@ -39107,6 +39107,7 @@ function (_React$Component) {
     value: function render() {
       var movie = this.props.movie;
       return _react.default.createElement(_Card.default, {
+        className: "movie-card",
         style: {
           width: "18rem"
         }
