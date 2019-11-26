@@ -39566,14 +39566,36 @@ function (_React$Component) {
   _inherits(ProfileView, _React$Component);
 
   function ProfileView() {
+    var _this;
+
     _classCallCheck(this, ProfileView);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(ProfileView).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ProfileView).call(this));
+    _this.state = {
+      user: null
+    };
+    return _this;
   }
 
   _createClass(ProfileView, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      axios.get("https://jessbob-flix.herokuapp.com/users/:User", {
+        Username: username,
+        Password: password,
+        Email: email,
+        Birthday: birthday
+      }).then(function (response) {
+        var data = response.data;
+        console.log(data); //window.open("/", "_self");
+      }).catch(function (e) {
+        console.log("error registering the user");
+      }); //props.onLoggedIn(username);
+    }
+  }, {
     key: "render",
     value: function render() {
+      var user = this.onLoggedIn.user;
       return _react.default.createElement(_Container.default, null, _react.default.createElement("div", {
         className: "profile-view"
       }, _react.default.createElement("div", {
@@ -39791,7 +39813,11 @@ function (_React$Component) {
         className: "main-view"
       });
       return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/profile-view"
+        to: "/"
+      }, _react.default.createElement(_Button.default, {
+        variant: "link"
+      }, "Movies")), _react.default.createElement(_reactRouterDom.Link, {
+        to: "/users/".concat(user)
       }, _react.default.createElement(_Button.default, {
         variant: "link"
       }, "Profile")), _react.default.createElement(_Button.default, {
@@ -39859,17 +39885,16 @@ function (_React$Component) {
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
-        path: "/users/user",
-        render: function render() {
+        path: "/users/:user",
+        render: function render(_ref4) {
+          var match = _ref4.match;
           if (!user) return _react.default.createElement(_loginView.LoginView, {
             onLoggedIn: function onLoggedIn(user) {
               return _this4.onLoggedIn(user);
             }
           });
           return _react.default.createElement(_profileView.ProfileView, {
-            onLoggedIn: function onLoggedIn(user) {
-              return _this4.onLoggedIn(user);
-            }
+            user: user.Username
           });
         }
       })));

@@ -117,7 +117,10 @@ export class MainView extends React.Component {
     return (
       <Router>
         <div>
-          <Link to={`/profile-view`}>
+          <Link to={`/`}>
+            <Button variant="link">Movies</Button>
+          </Link>
+          <Link to={`/users/${user}`}>
             <Button variant="link">Profile</Button>
           </Link>
           <Button variant="link" onClick={() => this.onLoggedOut()}>
@@ -171,11 +174,11 @@ export class MainView extends React.Component {
             }}
           />
           <Route
-            path="/users/user"
-            render={() => {
+            path="/users/:user"
+            render={({ match }) => {
               if (!user)
                 return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-              return <ProfileView onLoggedIn={user => this.onLoggedIn(user)} />;
+              return <ProfileView user={user.Username} />;
             }}
           />
         </div>
