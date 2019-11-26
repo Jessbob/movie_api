@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -12,6 +13,8 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { RegistrationView } from "../registration-view/registration-view";
 import { DirectorView } from "../director-view/director-view";
+import { GenreView } from "../genre-view/genre-view";
+import { ProfileView } from "../profile-view/profile-view";
 
 export class MainView extends React.Component {
   constructor() {
@@ -23,26 +26,6 @@ export class MainView extends React.Component {
       user: null,
       register: false
     };
-  }
-
-  componentDidMount() {
-    let accessToken = localStorage.getItem("token");
-    if (accessToken !== null) {
-      this.setState({
-        user: localStorage.getItem("user")
-      });
-      this.getMovies(accessToken);
-    }
-    // axios
-    //   .get("https://jessbob-flix.herokuapp.com/movies")
-    //   .then(response => {
-    //     this.setState({
-    //       movies: response.data
-    //     });
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
   }
 
   getMovies(token) {
@@ -58,6 +41,30 @@ export class MainView extends React.Component {
       .catch(function(error) {
         console.log(error);
       });
+  }
+
+  getUser(token) {
+    axios
+      .get("https://jessbob-flix.herokuapp.com/users", {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(response => {
+        this.setState(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  componentDidMount() {
+    let accessToken = localStorage.getItem("token");
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem("user")
+      });
+      this.getMovies(accessToken);
+      this.getUser(accessToken);
+    }
   }
 
   onMovieClick(movie) {
@@ -78,12 +85,12 @@ export class MainView extends React.Component {
   }
 
   onLoggedOut() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     this.setState({
       user: null
     });
-
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    window.open("/", "_self");
   }
 
   register() {
@@ -97,14 +104,6 @@ export class MainView extends React.Component {
   render() {
     const { movies, selectedMovie, user, register } = this.state;
 
-    /* if (!user && register === false)
-      return (
-        <LoginView
-          onClick={() => this.register()}
-          onLoggedIn={user => this.onLoggedIn(user)}
-        />
-      ); */
-
     if (register)
       return (
         <RegistrationView
@@ -117,6 +116,14 @@ export class MainView extends React.Component {
 
     return (
       <Router>
+        <div>
+          <Link to={`/profile-view`}>
+            <Button variant="link">Profile</Button>
+          </Link>
+          <Button variant="link" onClick={() => this.onLoggedOut()}>
+            Log Out
+          </Button>
+        </div>
         <div className="main-view">
           <Route
             exact
@@ -127,6 +134,7 @@ export class MainView extends React.Component {
               return movies.map(m => <MovieCard key={m._id} movie={m} />);
             }}
           />
+          <Route path="/register" render={() => <RegistrationView />} />
           <Route
             path="/movies/:movieId"
             render={({ match }) => (
@@ -149,35 +157,29 @@ export class MainView extends React.Component {
               );
             }}
           />
+          <Route
+            path="/genres/:name"
+            render={({ match }) => {
+              if (!movies) return <div className="main-view" />;
+              return (
+                <GenreView
+                  genre={
+                    movies.find(m => m.Genre.Name === match.params.name).Genre
+                  }
+                />
+              );
+            }}
+          />
+          <Route
+            path="/users/user"
+            render={() => {
+              if (!user)
+                return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+              return <ProfileView onLoggedIn={user => this.onLoggedIn(user)} />;
+            }}
+          />
         </div>
       </Router>
     );
   }
-
-  /*
-<div className="main-view">
-        <Container>
-          <Row>
-            {selectedMovie ? (
-              <MovieView
-                movie={selectedMovie}
-                goBack={() => this.onMovieClick(null)}
-              />
-            ) : (
-              movies.map(movie => (
-                <MovieCard
-                  key={movie._id}
-                  movie={movie}
-                  onClick={movie => this.onMovieClick(movie)}
-                />
-              ))
-            )}
-          </Row>
-          <Row>
-            <Button id="onLoggedOut" onClick={() => this.onLoggedOut()}>
-              Log Out
-            </Button>
-          </Row>
-        </Container>
-              </div> */
 }

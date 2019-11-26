@@ -16,11 +16,6 @@ export class MovieView extends React.Component {
 
     return (
       <Container>
-        <div>
-          <Button id="onLoggedOut" onClick={() => this.onLoggedOut()}>
-            Log Out
-          </Button>
-        </div>
         <div className="movie-view">
           <img className="movie-poster" src={movie.ImagePath} />
           <div className="movie-title">
@@ -50,9 +45,9 @@ export class MovieView extends React.Component {
             </Link>
           </div>
           <div>
-            <Button id="goBack" onClick={goBack}>
-              Back
-            </Button>
+            <Link to={`/`}>
+              <Button variant="link">Back</Button>
+            </Link>
           </div>
         </div>
       </Container>
