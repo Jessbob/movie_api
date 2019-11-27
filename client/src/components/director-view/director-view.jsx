@@ -13,7 +13,7 @@ export class DirectorView extends React.Component {
     const { director } = this.props;
     if (!director) return null;
     return (
-      <Card className="director-info" style={{ width: "18rem" }}>
+      <Card className="director-info" /*style={{ width: "32rem" }}*/>
         <Card.Body>
           <Card.Title className="director-name">{director.Name}</Card.Title>
           <Card.Text>

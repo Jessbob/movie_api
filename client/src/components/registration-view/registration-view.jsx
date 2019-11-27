@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export function RegistrationView(props) {
   const [username, createUsername] = useState("");
@@ -13,7 +14,7 @@ export function RegistrationView(props) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // console.log(username, password, email, birthday);
+
     axios
       .post("https://jessbob-flix.herokuapp.com/users", {
         Username: username,
@@ -29,11 +30,10 @@ export function RegistrationView(props) {
       .catch(e => {
         console.log("error registering the user");
       });
-    //props.onLoggedIn(username);
   };
 
   return (
-    <Container>
+    <Container style={{ width: "42rem" }}>
       <Form>
         <Form.Group controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
@@ -83,12 +83,10 @@ export function RegistrationView(props) {
         <Button type="submit" onClick={handleSubmit}>
           Register
         </Button>{" "}
-        <Button onClick={() => props.onClick()}>Go to Login</Button>
+        <Link to={"/login"}>
+          <Button>Go to Login</Button>
+        </Link>
       </Form>
     </Container>
   );
 }
-
-RegistrationView.propTypes = {
-  onClick: PropTypes.func.isRequired
-};

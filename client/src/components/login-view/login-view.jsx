@@ -28,7 +28,7 @@ export function LoginView(props) {
   };
 
   return (
-    <Container>
+    <Container style={{ width: "22rem" }}>
       <Form>
         <Form.Group controlId="formBasicUsername">
           <Form.Label>Username:</Form.Label>
@@ -68,5 +68,4 @@ export function LoginView(props) {
 
 LoginView.propTypes = {
   onLoggedIn: PropTypes.func.isRequired
-  // onClick: PropTypes.func.isRequired
 };

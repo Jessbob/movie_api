@@ -3,9 +3,6 @@ import axios from "axios";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
 import { LoginView } from "../login-view/login-view";
@@ -24,7 +21,8 @@ export class MainView extends React.Component {
       movies: [],
       selectedMovie: null,
       user: null,
-      register: false
+      register: false,
+      userInfo: {}
     };
   }
 
@@ -102,7 +100,7 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, selectedMovie, user, register } = this.state;
+    const { movies, selectedMovie, user, register, userInfo } = this.state;
 
     if (register)
       return (
@@ -127,6 +125,7 @@ export class MainView extends React.Component {
             Log Out
           </Button>
         </div>
+        <br />
         <div className="main-view">
           <Route
             exact
@@ -138,6 +137,7 @@ export class MainView extends React.Component {
             }}
           />
           <Route path="/register" render={() => <RegistrationView />} />
+          <Route path="/login" render={() => <LoginView />} />
           <Route
             path="/movies/:movieId"
             render={({ match }) => (
@@ -173,12 +173,13 @@ export class MainView extends React.Component {
               );
             }}
           />
+
           <Route
-            path="/users/:user"
+            path="/users/:Username"
             render={({ match }) => {
               if (!user)
                 return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-              return <ProfileView user={user.Username} />;
+              return <ProfileView userInfo={userInfo} />;
             }}
           />
         </div>

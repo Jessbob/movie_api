@@ -13,7 +13,7 @@ export class GenreView extends React.Component {
     const { genre } = this.props;
     if (!genre) return null;
     return (
-      <Card className="genre-info" style={{ width: "42rem" }}>
+      <Card className="genre-info" /*style={{ width: "42rem" }}*/>
         <Card.Body>
           <Card.Title className="genre-name">{genre.Name}</Card.Title>
           <Card.Text>
