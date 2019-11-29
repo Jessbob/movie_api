@@ -14,7 +14,8 @@ export class ProfileView extends React.Component {
       password: null,
       email: null,
       birthday: null,
-      userInfo: null
+      userInfo: null,
+      favorites: []
     };
   }
 
@@ -38,7 +39,8 @@ export class ProfileView extends React.Component {
           username: response.data.Username,
           password: response.data.Password,
           email: response.data.Email,
-          birthday: response.data.Birthday
+          birthday: response.data.Birthday,
+          favorites: response.data.Favorites
         });
       })
       .catch(function(error) {
@@ -47,7 +49,7 @@ export class ProfileView extends React.Component {
   }
 
   render() {
-    const { username, email, birthday } = this.state;
+    const { username, email, birthday, favorite } = this.state;
 
     return (
       <Container>
@@ -66,6 +68,17 @@ export class ProfileView extends React.Component {
             <span className="value">{birthday}</span>
           </div>
 
+          <div className="favorite-movies">
+            <span className="label">Favorite Movies: </span>
+            <span className="Value">
+              {" "}
+              <ul>
+                {this.state.favorites.map(favorite => (
+                  <li key={favorite}>{favorite}</li>
+                ))}
+              </ul>
+            </span>
+          </div>
           <div>
             <Link to={`/`}>
               <Button variant="link">Back</Button>

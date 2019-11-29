@@ -39391,7 +39391,7 @@ function (_React$Component) {
 
       }, _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_Card.default.Title, {
         className: "director-name"
-      }, director.Name), _react.default.createElement(_Card.default.Text, null, "Biography: ", _react.default.createElement("br", null), _react.default.createElement("br", null), director.Description, _react.default.createElement("br", null), _react.default.createElement("br", null), "Birth Year: ", director.Birth), _react.default.createElement("div", {
+      }, director.Name), _react.default.createElement(_Card.default.Text, null, _react.default.createElement("h6", null, "Biography:"), director.Description, _react.default.createElement("br", null), _react.default.createElement("br", null), "Birth Year: ", director.Birth), _react.default.createElement("div", {
         className: "text-center"
       }, _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
@@ -39535,7 +39535,8 @@ function (_React$Component) {
       password: null,
       email: null,
       birthday: null,
-      userInfo: null
+      userInfo: null,
+      favorites: []
     };
     return _this;
   }
@@ -39567,7 +39568,8 @@ function (_React$Component) {
           username: response.data.Username,
           password: response.data.Password,
           email: response.data.Email,
-          birthday: response.data.Birthday
+          birthday: response.data.Birthday,
+          favorites: response.data.Favorites
         });
       }).catch(function (error) {
         console.log(error);
@@ -39579,7 +39581,8 @@ function (_React$Component) {
       var _this$state = this.state,
           username = _this$state.username,
           email = _this$state.email,
-          birthday = _this$state.birthday;
+          birthday = _this$state.birthday,
+          favorite = _this$state.favorite;
       return _react.default.createElement(_Container.default, null, _react.default.createElement("div", {
         className: "profile-view"
       }, _react.default.createElement("div", {
@@ -39600,7 +39603,17 @@ function (_React$Component) {
         className: "label"
       }, "Birthday: "), _react.default.createElement("span", {
         className: "value"
-      }, birthday)), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
+      }, birthday)), _react.default.createElement("div", {
+        className: "favorite-movies"
+      }, _react.default.createElement("span", {
+        className: "label"
+      }, "Favorite Movies: "), _react.default.createElement("span", {
+        className: "Value"
+      }, " ", _react.default.createElement("ul", null, this.state.favorites.map(function (favorite) {
+        return _react.default.createElement("li", {
+          key: favorite
+        }, favorite);
+      })))), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         variant: "link"
