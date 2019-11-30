@@ -39536,7 +39536,8 @@ function (_React$Component) {
       email: null,
       birthday: null,
       userInfo: null,
-      favorites: []
+      favorites: [],
+      movies: []
     };
     return _this;
   }
@@ -39582,7 +39583,8 @@ function (_React$Component) {
           username = _this$state.username,
           email = _this$state.email,
           birthday = _this$state.birthday,
-          favorite = _this$state.favorite;
+          favorites = _this$state.favorites;
+      var movies = this.props.movies;
       return _react.default.createElement(_Container.default, null, _react.default.createElement("div", {
         className: "profile-view"
       }, _react.default.createElement("div", {
@@ -39609,10 +39611,29 @@ function (_React$Component) {
         className: "label"
       }, "Favorite Movies: "), _react.default.createElement("span", {
         className: "Value"
-      }, " ", _react.default.createElement("ul", null, this.state.favorites.map(function (favorite) {
-        return _react.default.createElement("li", {
-          key: favorite
-        }, favorite);
+      }, " ", _react.default.createElement("ul", null, favorites.map(function (favorite) {
+        var movie = movies.find(function (movie) {
+          return movie._id === favorite;
+        });
+
+        if (movie) {
+          return _react.default.createElement("div", {
+            className: "favorites",
+            key: favorite,
+            style: {
+              width: "2 rem"
+            }
+          }, _react.default.createElement("img", {
+            className: "movie-poster",
+            src: movie.ImagePath
+          }), _react.default.createElement("div", {
+            className: "movie-title"
+          }, _react.default.createElement("span", {
+            className: "label"
+          }, "Title: "), _react.default.createElement("span", {
+            className: "value"
+          }, movie.Title)));
+        }
       })))), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
       }, _react.default.createElement(_Button.default, {
@@ -39892,7 +39913,8 @@ function (_React$Component) {
             }
           });
           return _react.default.createElement(_profileView.ProfileView, {
-            userInfo: userInfo
+            userInfo: userInfo,
+            movies: movies
           });
         }
       })));

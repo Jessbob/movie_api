@@ -15,7 +15,8 @@ export class ProfileView extends React.Component {
       email: null,
       birthday: null,
       userInfo: null,
-      favorites: []
+      favorites: [],
+      movies: []
     };
   }
 
@@ -49,8 +50,8 @@ export class ProfileView extends React.Component {
   }
 
   render() {
-    const { username, email, birthday, favorite } = this.state;
-
+    const { username, email, birthday, favorites } = this.state;
+    const { movies } = this.props;
     return (
       <Container>
         <div className="profile-view">
@@ -73,9 +74,25 @@ export class ProfileView extends React.Component {
             <span className="Value">
               {" "}
               <ul>
-                {this.state.favorites.map(favorite => (
-                  <li key={favorite}>{favorite}</li>
-                ))}
+                {favorites.map(favorite => {
+                  const movie = movies.find(movie => movie._id === favorite);
+
+                  if (movie) {
+                    return (
+                      <div
+                        className="favorites"
+                        key={favorite}
+                        style={{ width: "2 rem" }}
+                      >
+                        <img className="movie-poster" src={movie.ImagePath} />
+                        <div className="movie-title">
+                          <span className="label">Title: </span>
+                          <span className="value">{movie.Title}</span>
+                        </div>
+                      </div>
+                    );
+                  }
+                })}
               </ul>
             </span>
           </div>
