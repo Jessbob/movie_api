@@ -17,13 +17,16 @@ export class MovieView extends React.Component {
     return (
       <Container>
         <div className="movie-view">
-          <img className="movie-poster" src={movie.ImagePath} />
-          <div className="movie-title">
-            <span className="label">Title: </span>
-            <span className="value">{movie.Title}</span>
+          <div className="value">
+            <h2>{movie.Title}</h2>
+
+            <img className="movie-poster" src={movie.ImagePath} />
+            <br />
           </div>
           <div className="movie-description">
-            <span className="label">Description: </span>
+            <span className="label">
+              <h5>Description: </h5>
+            </span>{" "}
             <span className="value">{movie.Description}</span>
           </div>
 

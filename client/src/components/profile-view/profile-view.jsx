@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 import axios from "axios";
 
@@ -49,6 +50,30 @@ export class ProfileView extends React.Component {
       });
   }
 
+  deleteFavorite(event, favorite) {
+    event.preventDefault();
+    console.log(favorite);
+    axios
+      .delete(
+        `https://jessbob-flix.herokuapp.com/users/${localStorage.getItem(
+          "user"
+        )}/Favorites/${favorite}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+        }
+      )
+      .then(response => {
+        this.getUser(localStorage.getItem("token"));
+      })
+      .catch(event => {
+        alert("Somethings not right");
+      });
+  }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
   render() {
     const { username, email, birthday, favorites } = this.state;
     const { movies } = this.props;
@@ -73,32 +98,43 @@ export class ProfileView extends React.Component {
             <span className="label">Favorite Movies: </span>
             <span className="Value">
               {" "}
-              <ul>
-                {favorites.map(favorite => {
-                  const movie = movies.find(movie => movie._id === favorite);
+              {favorites.map(favorite => {
+                const movie = movies.find(movie => movie._id === favorite);
 
-                  if (movie) {
-                    return (
-                      <div
-                        className="favorites"
-                        key={favorite}
-                        style={{ width: "2 rem" }}
-                      >
-                        <img className="movie-poster" src={movie.ImagePath} />
-                        <div className="movie-title">
-                          <span className="label">Title: </span>
-                          <span className="value">{movie.Title}</span>
-                        </div>
+                if (movie) {
+                  return (
+                    <div className="favorites" key={favorite}>
+                      <Link to={`/movies/${movie._id}`}>
+                        <img
+                          className="movie-poster"
+                          style={{ width: "6rem" }}
+                          src={movie.ImagePath}
+                        />
+                      </Link>
+                      <div>
+                        <Button
+                          size="sm"
+                          onClick={event =>
+                            this.deleteFavorite(event, favorite)
+                          }
+                        >
+                          Remove
+                        </Button>
                       </div>
-                    );
-                  }
-                })}
-              </ul>
+                    </div>
+                  );
+                }
+              })}
             </span>
           </div>
           <div>
             <Link to={`/`}>
               <Button variant="link">Back</Button>
+            </Link>
+            <Link to={`/update/:Username`}>
+              <Button className="button-update" variant="link">
+                Update profile
+              </Button>
             </Link>
           </div>
         </div>

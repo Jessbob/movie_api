@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
 
 import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
@@ -12,6 +13,7 @@ import { RegistrationView } from "../registration-view/registration-view";
 import { DirectorView } from "../director-view/director-view";
 import { GenreView } from "../genre-view/genre-view";
 import { ProfileView } from "../profile-view/profile-view";
+import { UpdateProfileView } from "../profile-view/update-profile";
 
 export class MainView extends React.Component {
   constructor() {
@@ -52,6 +54,12 @@ export class MainView extends React.Component {
       .catch(error => {
         console.log(error);
       });
+  }
+  updateUser(data) {
+    this.setState({
+      userInfo: data
+    });
+    localStorage.setItem("user", data.Username);
   }
 
   componentDidMount() {
@@ -100,7 +108,14 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, selectedMovie, user, register, userInfo } = this.state;
+    const {
+      movies,
+      selectedMovie,
+      user,
+      register,
+      userInfo,
+      token
+    } = this.state;
 
     if (register)
       return (
@@ -126,6 +141,7 @@ export class MainView extends React.Component {
           </Button>
         </div>
         <br />
+
         <div className="main-view">
           <Route
             exact
@@ -138,6 +154,7 @@ export class MainView extends React.Component {
           />
           <Route path="/register" render={() => <RegistrationView />} />
           <Route path="/login" render={() => <LoginView />} />
+
           <Route
             path="/movies/:movieId"
             render={({ match }) => (
@@ -181,6 +198,17 @@ export class MainView extends React.Component {
                 return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
               return <ProfileView userInfo={userInfo} movies={movies} />;
             }}
+          />
+          <Route
+            path="/update/:Username"
+            render={() => (
+              <UpdateProfileView
+                userInfo={userInfo}
+                user={user}
+                token={token}
+                updateUser={data => this.updateUser(data)}
+              />
+            )}
           />
         </div>
       </Router>
