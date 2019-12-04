@@ -43806,13 +43806,34 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MovieView).call(this));
     _this.state = {};
     return _this;
-  }
+  } //function MovieView(props) {
+  //  const { movies, movieId } = props;
+  //  const movie = movies.find(m => m._id === movieId);
+
 
   _createClass(MovieView, [{
     key: "render",
     value: function render() {
       var movie = this.props.movie;
       if (!movie) return null;
+
+      function addFavorite(e) {
+        e.preventDefault();
+        console.log();
+
+        _axios.default.post("https://jessbob-flix.herokuapp.com/users/".concat(localStorage.getItem("user"), "/movies/").concat(movie._id), {
+          username: localStorage.getItem("user")
+        }, {
+          headers: {
+            Authorization: "Bearer ".concat(localStorage.getItem("token"))
+          }
+        }).then(function (res) {
+          alert("Added movie to favorites");
+        }).catch(function (e) {
+          alert("There was an error adding movie to favorites");
+        });
+      }
+
       return _react.default.createElement(_Container.default, {
         style: {
           width: "42rem"
@@ -43850,7 +43871,13 @@ function (_React$Component) {
         to: "/genres/".concat(movie.Genre.Name)
       }, _react.default.createElement(_Button.default, {
         variant: "link"
-      }, "Genre"))), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
+      }, "Genre")), _react.default.createElement(_Button.default, {
+        className: "favoriteButton",
+        variant: "link",
+        onClick: function onClick(e) {
+          return addFavorite(e);
+        }
+      }, "Add to Favorites")), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         variant: "link"
@@ -43859,7 +43886,8 @@ function (_React$Component) {
   }]);
 
   return MovieView;
-}(_react.default.Component);
+}(_react.default.Component); //export default connect(({ movies }) => ({ movies }))(MovieView);
+
 
 exports.MovieView = MovieView;
 },{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-redux":"../node_modules/react-redux/es/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","./movie-view.scss":"components/movie-view/movie-view.scss"}],"components/registration-view/registration-view.jsx":[function(require,module,exports) {

@@ -15,10 +15,38 @@ export class MovieView extends React.Component {
     super();
     this.state = {};
   }
+  //function MovieView(props) {
+  //  const { movies, movieId } = props;
+  //  const movie = movies.find(m => m._id === movieId);
 
   render() {
     const { movie } = this.props;
     if (!movie) return null;
+
+    function addFavorite(e) {
+      e.preventDefault();
+      console.log();
+      axios
+        .post(
+          `https://jessbob-flix.herokuapp.com/users/${localStorage.getItem(
+            "user"
+          )}/movies/${movie._id}`,
+          {
+            username: localStorage.getItem("user")
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+          }
+        )
+        .then(res => {
+          alert("Added movie to favorites");
+        })
+        .catch(e => {
+          alert("There was an error adding movie to favorites");
+        });
+    }
 
     return (
       <Container style={{ width: "42rem" }}>
@@ -52,6 +80,13 @@ export class MovieView extends React.Component {
             <Link to={`/genres/${movie.Genre.Name}`}>
               <Button variant="link">Genre</Button>
             </Link>
+            <Button
+              className="favoriteButton"
+              variant="link"
+              onClick={e => addFavorite(e)}
+            >
+              Add to Favorites
+            </Button>
           </div>
           <div>
             <Link to={`/`}>
@@ -63,3 +98,5 @@ export class MovieView extends React.Component {
     );
   }
 }
+
+//export default connect(({ movies }) => ({ movies }))(MovieView);
