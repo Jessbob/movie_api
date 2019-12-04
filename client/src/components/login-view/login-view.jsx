@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+//Routing
+import axios from "axios";
+import { Link } from "react-router-dom";
+//Styling
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
-import PropTypes from "prop-types";
-import axios from "axios";
-import { Link } from "react-router-dom";
 
 export function LoginView(props) {
   const [username, setUsername] = useState("");

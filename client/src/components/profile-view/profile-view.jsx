@@ -1,13 +1,11 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-
+//Routing
 import axios from "axios";
-
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+//Styling
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 
 const mapStateToProps = state => {
@@ -126,27 +124,24 @@ export class ProfileView extends React.Component {
                 if (movie) {
                   return (
                     <div className="favorites" key={favorite}>
-                      <Row>
-                        <Col>
-                          <Link to={`/movies/${movie._id}`}>
-                            <img
-                              className="movie-poster"
-                              style={{ width: "6rem" }}
-                              src={movie.ImagePath}
-                            />
-                          </Link>
-                          <div>
-                            <Button
-                              size="sm"
-                              onClick={event =>
-                                this.deleteFavorite(event, favorite)
-                              }
-                            >
-                              Remove
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
+                      <Link to={`/movies/${movie._id}`}>
+                        <img
+                          className="movie-poster"
+                          style={{ width: "6rem" }}
+                          src={movie.ImagePath}
+                        />
+                      </Link>
+                      <div>
+                        <Button
+                          size="sm"
+                          onClick={event =>
+                            this.deleteFavorite(event, favorite)
+                          }
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                      <br />
                     </div>
                   );
                 }

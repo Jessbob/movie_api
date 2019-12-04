@@ -1,26 +1,25 @@
 import React from "react";
+//Routing
 import axios from "axios";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
-
-import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Navbar from "react-bootstrap/Navbar";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Container from "react-bootstrap/Container";
-
+import { connect } from "react-redux";
+//Actions
 import { setMovies, setUser } from "../../actions/actions";
-
+//Views
 import MoviesList from "../movies-list/movies-list";
-import { LoginView } from "../login-view/login-view";
-import { MovieCard } from "../movie-card/movie-card";
-import { MovieView } from "../movie-view/movie-view";
-import { RegistrationView } from "../registration-view/registration-view";
+import MovieView from "../movie-view/movie-view";
 import DirectorView from "../director-view/director-view";
 import GenreView from "../genre-view/genre-view";
 import ProfileView from "../profile-view/profile-view";
 import { UpdateProfileView } from "../profile-view/update-profile";
-import { connect } from "react-redux";
+import { LoginView } from "../login-view/login-view";
+import { RegistrationView } from "../registration-view/registration-view";
+//Styling
+import Button from "react-bootstrap/Button";
+import Navbar from "react-bootstrap/Navbar";
+import Container from "react-bootstrap/Container";
+import "./main-view.scss";
 
 export class MainView extends React.Component {
   constructor() {
@@ -117,28 +116,26 @@ export class MainView extends React.Component {
 
     return (
       <Router>
-        <Navbar bg="dark">
-          <ButtonGroup>
-            <Link to={`/`}>
-              <Button variant="link">
-                <b>Movies</b>
-              </Button>
-            </Link>
-            <Link to={`/users/${user}`}>
-              <Button variant="link">
-                <b>Profile</b>
-              </Button>
-            </Link>
-            <Button variant="link" onClick={() => this.onLoggedOut()}>
-              <b>Log Out</b>
+        <Navbar bg="primary" variant="dark">
+          <Link to={`/`}>
+            <Button size="lg">
+              <b>Movies</b>
             </Button>
-          </ButtonGroup>
+          </Link>
+          <Link to={`/users/${user}`}>
+            <Button size="lg">
+              <b>Profile</b>
+            </Button>
+          </Link>
+          <Button size="lg" onClick={() => this.onLoggedOut()}>
+            <b>Log Out</b>
+          </Button>
         </Navbar>
 
         <br />
 
         <div className="main-view">
-          <Container bg="dark">
+          <Container>
             <Route
               exact
               path="/"
@@ -153,15 +150,11 @@ export class MainView extends React.Component {
           </Container>
           <Route path="/register" render={() => <RegistrationView />} />
           <Route path="/login" render={() => <LoginView />} />
-
           <Route
-            path="/movies/:movieId"
-            render={({ match }) => (
-              <MovieView
-                movie={movies.find(m => m._id === match.params.movieId)}
-              />
-            )}
+            path="/movies/:id"
+            render={({ match }) => <MovieView movieId={match.params.id} />}
           />
+
           <Route
             exact
             path="/directors/:name"
@@ -174,7 +167,6 @@ export class MainView extends React.Component {
             path="/genres/:name"
             render={({ match }) => <GenreView genreName={match.params.name} />}
           />
-
           <Route
             path="/users/:Username"
             render={({ match }) => {

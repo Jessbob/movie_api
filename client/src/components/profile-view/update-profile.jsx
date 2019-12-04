@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+//Routing
+import axios from "axios";
+import { connect } from "react-redux";
+//Styling
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 
 const mapStateToProps = state => {
   const { movies } = state;
@@ -13,24 +13,11 @@ const mapStateToProps = state => {
 };
 
 export function UpdateProfileView(props) {
-  /* const {
-    Username: oldUsername,
-    Password: oldPassword,
-    Email: oldEmail,
-    Birthday: oldBirthday
-  } = props.userInfo; */
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
-  /*
-  useEffect(() => {
-    setUsername(oldUsername);
-    setPassword(oldPassword);
-    setEmail(oldEmail);
-    setBirthday(oldBirthday);
-  }, [oldUsername, oldPassword, oldEmail, oldBirthday]);
-*/
+
   const user = props.user;
 
   const updateSubmit = e => {
@@ -44,19 +31,9 @@ export function UpdateProfileView(props) {
     };
 
     axios
-      .put(
-        `https://jessbob-flix.herokuapp.com/users/${user}`,
-        userInfo,
-        /*  {
-          Username: username,
-          Password: password,
-          Email: email,
-          Birthday: birthday
-        },*/
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-        }
-      )
+      .put(`https://jessbob-flix.herokuapp.com/users/${user}`, userInfo, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+      })
       .then(reponse => {
         props.updateUser(userInfo);
         alert("Update Succsessfull");
@@ -68,17 +45,6 @@ export function UpdateProfileView(props) {
         console.log(error);
       });
   };
-  /*
-      .then(res => {
-        const data = res.data;
-        console.log(data);
-        alert("Update Succsessfull");
-        window.open("/", "_self");
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }; */
 
   const deleteSubmit = e => {
     e.preventDefault();
