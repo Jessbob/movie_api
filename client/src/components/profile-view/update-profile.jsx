@@ -5,30 +5,37 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
+const mapStateToProps = state => {
+  const { movies } = state;
+  return { movies };
+};
 
 export function UpdateProfileView(props) {
-  const {
+  /* const {
     Username: oldUsername,
     Password: oldPassword,
     Email: oldEmail,
     Birthday: oldBirthday
-  } = props.userInfo;
+  } = props.userInfo; */
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
-
+  /*
   useEffect(() => {
     setUsername(oldUsername);
     setPassword(oldPassword);
     setEmail(oldEmail);
     setBirthday(oldBirthday);
   }, [oldUsername, oldPassword, oldEmail, oldBirthday]);
-
+*/
   const user = props.user;
 
   const updateSubmit = e => {
     e.preventDefault();
+    console.log();
     const userInfo = {
       Username: username,
       Password: password,
@@ -37,20 +44,45 @@ export function UpdateProfileView(props) {
     };
 
     axios
-      .put(`https://jessbob-flix.herokuapp.com/users/${user}`, userInfo, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-      })
+      .put(
+        `https://jessbob-flix.herokuapp.com/users/${user}`,
+        userInfo,
+        /*  {
+          Username: username,
+          Password: password,
+          Email: email,
+          Birthday: birthday
+        },*/
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+        }
+      )
       .then(reponse => {
         props.updateUser(userInfo);
         alert("Update Succsessfull");
+        localStorage.getItem("token");
+        localStorage.getItem("user");
+        window.open("/", "_self");
       })
       .catch(function(error) {
         console.log(error);
       });
   };
+  /*
+      .then(res => {
+        const data = res.data;
+        console.log(data);
+        alert("Update Succsessfull");
+        window.open("/", "_self");
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }; */
 
   const deleteSubmit = e => {
     e.preventDefault();
+
     axios
       .delete(`https://jessbob-flix.herokuapp.com/users/${user}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
@@ -123,3 +155,4 @@ export function UpdateProfileView(props) {
     </Container>
   );
 }
+export default connect(mapStateToProps)(UpdateProfileView);

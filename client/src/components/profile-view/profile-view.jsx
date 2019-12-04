@@ -2,10 +2,18 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 import axios from "axios";
 
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import Card from "react-bootstrap/Card";
+
+const mapStateToProps = state => {
+  const { movies } = state;
+  return { movies };
+};
 
 export class ProfileView extends React.Component {
   constructor() {
@@ -78,67 +86,85 @@ export class ProfileView extends React.Component {
     const { username, email, birthday, favorites } = this.state;
     const { movies } = this.props;
     return (
-      <Container>
-        <div className="profile-view">
-          <div className="profile-title">
-            <span className="label">Username: </span>
-            <span className="value">{username}</span>
-          </div>
-          <div className="profile-email">
-            <span className="label">Email: </span>
-            <span className="value">{email}</span>
-          </div>
-
-          <div className="profile-birthday">
-            <span className="label">Birthday: </span>
-            <span className="value">{birthday}</span>
-          </div>
-
+      <div className="profile-view">
+        <Container>
+          <Card bg="primary" text="white" style={{ width: "30rem" }}>
+            <Card.Header>
+              <h2>
+                {"  "}
+                {username}
+              </h2>
+            </Card.Header>
+            <Card bg="light" text="primary">
+              <Card.Body>
+                <Card.Text>
+                  <b>Email: {email}</b>
+                </Card.Text>
+                <Card.Text>
+                  <b>Birthday: {birthday}</b>
+                </Card.Text>
+                <Card.Text>
+                  <Link to={`/update/:Username`}>
+                    <Button className="button-update" variant="link">
+                      Update profile
+                    </Button>
+                  </Link>
+                </Card.Text>
+              </Card.Body>{" "}
+            </Card>
+          </Card>
+        </Container>
+        <br />
+        <Container>
           <div className="favorite-movies">
             <span className="label">Favorite Movies: </span>
+
             <span className="Value">
-              {" "}
               {favorites.map(favorite => {
                 const movie = movies.find(movie => movie._id === favorite);
 
                 if (movie) {
                   return (
                     <div className="favorites" key={favorite}>
-                      <Link to={`/movies/${movie._id}`}>
-                        <img
-                          className="movie-poster"
-                          style={{ width: "6rem" }}
-                          src={movie.ImagePath}
-                        />
-                      </Link>
-                      <div>
-                        <Button
-                          size="sm"
-                          onClick={event =>
-                            this.deleteFavorite(event, favorite)
-                          }
-                        >
-                          Remove
-                        </Button>
-                      </div>
+                      <Row>
+                        <Col>
+                          <Link to={`/movies/${movie._id}`}>
+                            <img
+                              className="movie-poster"
+                              style={{ width: "6rem" }}
+                              src={movie.ImagePath}
+                            />
+                          </Link>
+                          <div>
+                            <Button
+                              size="sm"
+                              onClick={event =>
+                                this.deleteFavorite(event, favorite)
+                              }
+                            >
+                              Remove
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
                     </div>
                   );
                 }
               })}
             </span>
           </div>
+        </Container>
+
+        <Container>
           <div>
             <Link to={`/`}>
               <Button variant="link">Back</Button>
             </Link>
-            <Link to={`/update/:Username`}>
-              <Button className="button-update" variant="link">
-                Update profile
-              </Button>
-            </Link>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
     );
   }
 }
+
+export default connect(mapStateToProps)(ProfileView);

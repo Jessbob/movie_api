@@ -1,8 +1,14 @@
 import React from "react";
+//routing data
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+//styling
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-
-import { Link } from "react-router-dom";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import "./movie-view.scss";
 
 export class MovieView extends React.Component {
   constructor() {
@@ -11,11 +17,11 @@ export class MovieView extends React.Component {
   }
 
   render() {
-    const { movie, goBack } = this.props;
+    const { movie } = this.props;
     if (!movie) return null;
 
     return (
-      <Container>
+      <Container style={{ width: "42rem" }}>
         <div className="movie-view">
           <div className="value">
             <h2>{movie.Title}</h2>
