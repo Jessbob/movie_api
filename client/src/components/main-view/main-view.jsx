@@ -115,7 +115,7 @@ export class MainView extends React.Component {
     let { user, userInfo, token } = this.state;
 
     return (
-      <Router>
+      <Router basename="/client">
         <Navbar bg="primary" variant="dark">
           <Link to={`/`}>
             <Button size="lg">

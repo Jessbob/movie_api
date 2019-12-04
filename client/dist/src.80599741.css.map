@@ -1,0 +1,1 @@
+{"version":3,"sources":["components/main-view/main-view.scss","index.scss"],"names":[],"mappings":"AAAA,KACE,yBAGF,QACE,YCHF,SACI","file":"src.80599741.css","sourceRoot":"../src","sourcesContent":["body {\r\n  background-color: lightgray;\r\n}\r\n\r\n.logout {\r\n  float: right;\r\n}\r\n","$color: steelblue;\r\n\r\n.my-flix {\r\n    color: $color;\r\n}"]}

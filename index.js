@@ -1,3 +1,5 @@
+const path = require("path");
+
 const express = require("express"),
   bodyParser = require("body-parser"),
   uuid = require("uuid");
@@ -20,6 +22,10 @@ mongoose.connect(
 app.use(bodyParser.json());
 app.use(morgan("common"));
 app.use(express.static("public"));
+app.use("/client", express.static(path.join(_dirname, "client", "dist")));
+app.get("/client/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 app.use(cors());
 app.use(function(err, req, res, next) {
   console.error(err.stack);
