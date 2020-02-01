@@ -7,6 +7,20 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 
+/**
+ * @function GenreView
+ * @param {string} https://jessbob-flix.herokuapp.com/movies/:genre GET request JSON object holding data about a genre.
+{
+genre: “Genres name”,
+description: “Genres Description”
+}
+
+ * @return {object<array>}
+ * @example function GenreView(props) {
+  const { movies, genreName } = props;
+  const genre = movies.find(m => m.Genre.Name === genreName);
+ */
+
 function GenreView(props) {
   const { movies, genreName } = props;
   const genre = movies.find(m => m.Genre.Name === genreName);

@@ -1,4 +1,32 @@
-import React from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main-view/main-view.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main-view/main-view.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
 //Routing
 import axios from "axios";
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -35,7 +63,7 @@ export class MainView extends React.Component {
    * Return a list of ALL movies to the user
    * @function getMovies
    * @param {string}  https://jessbob-flix.herokuapp.com/movies URL to send GET request for a list of all movies in the database.
-   * @returns {object<array>} A Json object holding the data about all movies
+   * @returns {object&lt;array>} A Json object holding the data about all movies
    * @example getMovies(token) {
     axios
       .get("https://jessbob-flix.herokuapp.com/movies", {
@@ -63,10 +91,10 @@ export class MainView extends React.Component {
   }
 
   /**
-   * Set user data
+   *Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user.
    * @function getUser
    * @param {string} https://jessbob-flix.herokuapp.com/users URL to send GET request for current user.
-   * @return {object<array>} Set current user
+   * @return {object&lt;array>} Set current user
    * @example getUser(token) {
     axios
       .get("https://jessbob-flix.herokuapp.com/users", {
@@ -106,7 +134,7 @@ email: newman@usps.com,
 password: “jerry5A”
 }
 
-   * @return {object<array>} Update user data
+   * @return {object&lt;array>} Update user data
    * @example  updateUser(data) {
     this.setState({
       userInfo: data
@@ -173,70 +201,70 @@ password: “jerry5A”
     let { user, userInfo, token } = this.state;
 
     return (
-      <Router basename="/client">
-        <Navbar bg="primary" variant="dark">
-          <Link to={`/`}>
-            <Button size="lg">
-              <b>Movies</b>
-            </Button>
-          </Link>
-          <Link to={`/users/${user}`}>
-            <Button size="lg">
-              <b>Profile</b>
-            </Button>
-          </Link>
-          <Button size="lg" onClick={() => this.onLoggedOut()}>
-            <b>Log Out</b>
-          </Button>
-        </Navbar>
+      &lt;Router basename="/client">
+        &lt;Navbar bg="primary" variant="dark">
+          &lt;Link to={`/`}>
+            &lt;Button size="lg">
+              &lt;b>Movies&lt;/b>
+            &lt;/Button>
+          &lt;/Link>
+          &lt;Link to={`/users/${user}`}>
+            &lt;Button size="lg">
+              &lt;b>Profile&lt;/b>
+            &lt;/Button>
+          &lt;/Link>
+          &lt;Button size="lg" onClick={() => this.onLoggedOut()}>
+            &lt;b>Log Out&lt;/b>
+          &lt;/Button>
+        &lt;/Navbar>
 
-        <br />
+        &lt;br />
 
-        <div className="main-view">
-          <Container>
-            <Route
+        &lt;div className="main-view">
+          &lt;Container>
+            &lt;Route
               exact
               path="/"
               render={() => {
                 if (!user)
                   return (
-                    <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                    &lt;LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                   );
-                return <MoviesList movies={movies} />;
+                return &lt;MoviesList movies={movies} />;
               }}
             />
-          </Container>
-          <Route path="/register" render={() => <RegistrationView />} />
-          <Route path="/login" render={() => <LoginView />} />
-          <Route
+          &lt;/Container>
+          &lt;Route path="/register" render={() => &lt;RegistrationView />} />
+          &lt;Route path="/login" render={() => &lt;LoginView />} />
+          &lt;Route
             path="/movies/:id"
-            render={({ match }) => <MovieView movieId={match.params.id} />}
+            render={({ match }) => &lt;MovieView movieId={match.params.id} />}
           />
 
-          <Route
+          &lt;Route
             exact
             path="/directors/:name"
             render={({ match }) => (
-              <DirectorView directorName={match.params.name} />
+              &lt;DirectorView directorName={match.params.name} />
             )}
           />
-          <Route
+          &lt;Route
             exact
             path="/genres/:name"
-            render={({ match }) => <GenreView genreName={match.params.name} />}
+            render={({ match }) => &lt;GenreView genreName={match.params.name} />}
           />
-          <Route
+          &lt;Route
             path="/users/:Username"
             render={({ match }) => {
               if (!user)
-                return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-              return <ProfileView />;
+                return &lt;LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+              return &lt;ProfileView />;
             }}
           />
-          <Route
+          &lt;Route
             path="/update/:Username"
             render={() => (
-              <UpdateProfileView
+              &lt;UpdateProfileView
                 userInfo={userInfo}
                 user={user}
                 token={token}
@@ -244,8 +272,8 @@ password: “jerry5A”
               />
             )}
           />
-        </div>
-      </Router>
+        &lt;/div>
+      &lt;/Router>
     );
   }
 }
@@ -255,3 +283,26 @@ let mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, { setMovies, setUser })(MainView);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#DirectorView">DirectorView</a></li><li><a href="global.html#getMovies">getMovies</a></li><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#updateUser">updateUser</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Jan 30 2020 12:05:05 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

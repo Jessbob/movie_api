@@ -7,6 +7,20 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
+/**
+ * @function DirectorView
+ * @param {string} https://jessbob-flix.herokuapp.com/directors/:name GET request JSON object holding data about a director.
+{
+director: “Director’s Name”,
+bio: “Bio goes here”,
+birth: “Birth year goes here”,
+death: “Death year goes here”
+}
+ * @return {object<array>}
+ * @example function DirectorView(props) {
+  const { movies, directorName } = props;
+  const director = movies.find(m => m.Director.Name === directorName);
+ */
 function DirectorView(props) {
   const { movies, directorName } = props;
   const director = movies.find(m => m.Director.Name === directorName);
